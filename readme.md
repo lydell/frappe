@@ -291,6 +291,17 @@ your function changes.
 
 Frappe also has arrow generators: `*|>` → `function*(){}.bind(this)`.
 
+Sane member access on number literals
+-------------------------------------
+
+`5.toString()` → `5..toString()`
+
+Number and string member access
+-------------------------------
+
+- `a.5` → `a[5]`
+- `a.'prop-name'` → `a['prop-name']`
+- `a.'prop-${b}'` → ``a[`prop-${b}`]``
 
 Undecided features
 ------------------
@@ -399,6 +410,9 @@ Intentionally left out CoffeeScript features
 
 - The `extends` operator. Use JavaScript’s classes or good old manual prototypal
   inheritance instead.
+
+- The `::` → `.prototype.` operator. Not used enough to warrant that shortcut.
+  Will be used even less not that JavaScript has `class` syntax.
 
 - `a in b` → `b.indexOf(a)`. Too confusing for Frappe to change one of
   JavaScript’s operators. Use `b.includes(a)` instead.
