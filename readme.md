@@ -64,8 +64,10 @@ Conditionals and loops
 
 - Parentheses can be dropped if followed by a block:
 
-      if condition { block } // valid
-      if condition statement // invalid
+  ```
+  if condition { block } // valid
+  if condition statement // invalid
+  ```
 
   This applies to `if`, `while` and their aliases below, as well as `for`,
   `switch` and `catch`.
