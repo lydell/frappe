@@ -392,12 +392,12 @@ Undecided features
 - `a %% b` “useful” modulo. Used it a few times. `(a % b + b) % b` is difficult
   to remember.
 
+- Significant indentation. I _love_ significant indentation, so it hurt a bit
+  making this decision. It takes Frappe further away from JavaScript, and
+  requires to make lots of difficult decisions, but it _might_ be worth it.
+
 Considered features intentionally left out
 ------------------------------------------
-
-- Significant indentation. I _love_ significant indentation, so it hurt a bit
-  making this decision. It takes Frappe too far away from JavaScript, and
-  requires to make lots of difficult decisions.
 
 - `#` for single line comments. `#` is beautiful and short and used in many
   languages, but it deviates from JavaScript for little reason. Better to keep
