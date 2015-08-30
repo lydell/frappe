@@ -347,39 +347,6 @@ Undecided features
         b: 2
       }
 
-- Automatic `break`s in `case`s, and disallow `break` to break the
-  `switch`—instead make `break` always break loops. Use `case-fallthrough` for
-  fallthrough.
-
-      while a < b {
-        switch foo {
-          case 1:
-            bar()
-            // Automatic break
-          case 2:
-            break // breaks the `while` loop
-          case 3:
-            bar()
-            case-fallthrough
-          case 4:
-            baz()
-        }
-      }
-
-- `switch { cases }` to switch on thruthiness.
-
-- Some statements being expressions, especially `if-else`, `switch` and `try`,
-  but not loops (see [Intentionally left out CoffeeScript features]). But
-  disallow `a = b if c` (use `a = if (c) b else undefined` or `a = c ? b :
-  undefined` instead). Let’s see what happens with the JavaScript proposals on
-  this subject.
-
-      let type = switch {
-        case foo.bar(): 'bar'
-        case foo.baz is 5: 'baz'
-        default: 'unknown'
-      }
-
 - `a?.b?()` etc. Let’s see what the JavaScript proposals here come up with.
   Related: `a ?= b`, `a ? b` (the last one conflicts with `a ? b : c`).
 
@@ -405,6 +372,66 @@ Considered features intentionally left out
       [1 1 + 2 3 a instanceof b] // invalid
 
   It’s too far from JavaScript, and those commas don’t hurt that much.
+
+### “Switches and if-else-es”
+
+- Automatic `break`s in `case`s, and disallow `break` to break the
+  `switch`—instead make `break` always break loops. Use `case-fallthrough` for
+  fallthrough.
+
+      while a < b {
+        switch foo {
+          case 1:
+            bar()
+            // Automatic break
+          case 2:
+            break // breaks the `while` loop
+          case 3:
+            bar()
+            case-fallthrough
+          case 4:
+            baz()
+        }
+      }
+
+  This would be nice, but is too confusing compared to JavaScript.
+
+- `switch { cases }` to switch on thruthiness.
+
+- Some statements being expressions, especially `if-else`, `switch` and `try`,
+  but not loops (see [Intentionally left out CoffeeScript features]). But
+  disallow `a = b if c` (use `a = if (c) b else undefined` or `a = c ? b :
+  undefined` instead). Let’s see what happens with the JavaScript proposals on
+  this subject.
+
+      let type = switch {
+        case foo.bar(): 'bar'
+        case foo.baz is 5: 'baz'
+        default: 'unknown'
+      }
+
+The only thing I miss here from CoffeeScript is this:
+
+```coffee
+value = switch
+  when value.type is 'element' then foo
+  when value instanceof Dice then bar
+  when value.length > 0 then baz
+  else null
+```
+
+What we need is a nice alternative to nested ternaries:
+
+```coffee
+let value =
+  value.type === 'element' ? foo :
+  value instanceof Dice ? bar :
+  value.length > 0 ? baz :
+  null
+```
+
+I have no good ideas yet, though.
+
 
 Intentionally left out CoffeeScript features
 --------------------------------------------
