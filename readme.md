@@ -189,8 +189,7 @@ CoffeeScript’s strings.
         a    \x20  // space escape → “a” followed by five spaces
           \x20 // space escape → a line consisting of three spaces
         a  ${} // empty interpolation (see below) → “a” followed by two spaces
-        a  | // run-time stripping (see next line) → “a” followed by two spaces
-      '.replace(/\|$/g, '')
+      '
 
   Not adopting CoffeeScript’s triple-quoting syntax has the benefit of
   not having to define what for example the following should mean:
