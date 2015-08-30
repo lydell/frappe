@@ -347,12 +347,6 @@ Undecided features
         b: 2
       }
 
-- “Automatic comma inseriton” between operator-less expressions in arrays and
-  objects (and possibly parameter lists?).
-
-      ['one' 2 three fn() a.b (1 + 2)] // valid
-      [1 1 + 2 3 a instanceof b] // invalid
-
 - Automatic `break`s in `case`s, and disallow `break` to break the
   `switch`—instead make `break` always break loops. Use `case-fallthrough` for
   fallthrough.
@@ -403,6 +397,14 @@ Considered features intentionally left out
   languages, but it deviates from JavaScript for little reason. Better to keep
   `//` doing what it does in JavaScript, and use `#` (one of the few unused
   ASCII characters) for something more useful.
+
+- “Automatic comma inseriton” between operator-less expressions in arrays and
+  objects (and possibly parameter lists).
+
+      ['one' 2 three fn() a.b (1 + 2)] // valid
+      [1 1 + 2 3 a instanceof b] // invalid
+
+  It’s too far from JavaScript, and those commas don’t hurt that much.
 
 Intentionally left out CoffeeScript features
 --------------------------------------------
