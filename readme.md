@@ -333,6 +333,16 @@ Undecided features
 - CoffeeScript has `loop` → `while true`. Is it worth it? Could there be `while
   { block }` → `while (true) { block }`?
 
+- `a?.b?()` etc. Let’s see what the JavaScript proposals here come up with.
+  Related: `a ?= b`, `a ? b` (the last one conflicts with `a ? b : c`).
+
+- `a %% b` “useful” modulo. Used it a few times. `(a % b + b) % b` is difficult
+  to remember.
+
+- Significant indentation. I _love_ significant indentation, so it hurt a bit
+  making this decision. It takes Frappe further away from JavaScript, and
+  requires to make lots of difficult decisions, but it _might_ be worth it.
+
 - “Automatic comma insertions” in arrays and objects (and possibly parameter
   lists?).
 
@@ -346,15 +356,7 @@ Undecided features
         b: 2
       }
 
-- `a?.b?()` etc. Let’s see what the JavaScript proposals here come up with.
-  Related: `a ?= b`, `a ? b` (the last one conflicts with `a ? b : c`).
-
-- `a %% b` “useful” modulo. Used it a few times. `(a % b + b) % b` is difficult
-  to remember.
-
-- Significant indentation. I _love_ significant indentation, so it hurt a bit
-  making this decision. It takes Frappe further away from JavaScript, and
-  requires to make lots of difficult decisions, but it _might_ be worth it.
+  If significant indentation makes it, then this one definitely does as well.
 
 Considered features intentionally left out
 ------------------------------------------
