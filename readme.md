@@ -67,7 +67,8 @@ Aliases
   In the end, the easiest way to go is to just do it like CoffeeScript. After
   all, lots of people are used to it. I also find `expression1 isnt expression2`
   a more obvious negated comparison than `expression1 is not expression2`,
-  because of the extra space.
+  because of the extra space. It’s better to have the linter catch `a is not b`
+  as unclear, possibly erraneous code.
 
 - `@` → `this.`. Unlike CoffeeScript, `@` strictly means `this.`, so `@` by
   itself is invalid (use `this` instead), as is `@[foo]` and `@()` (use
