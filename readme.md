@@ -344,6 +344,55 @@ Undecided features
   making this decision. It takes Frappe further away from JavaScript, and
   requires to make lots of difficult decisions, but it _might_ be worth it.
 
+  The current idea is to drop all braces for blocks (but still require them for
+  object literals), and require a newline to start blocks.
+
+  ```
+  if condition
+    foo = bar
+
+  if (condition) // You can of course wrap any expression in parentheses if you want to.
+    foo = bar
+
+  if (condition) foo = bar // Invalid. Newline required.
+  foo = bar if condition // Valid.
+
+  function add(a, b)
+    return a + b
+
+  function add(a, b) return a + b // Invalid. Newline required.
+
+  add = (a, b) => a + b // Valid.
+  add = |a, b> a + b // Valid.
+
+  class Person
+    constructor(@firstName, @lastName)
+      @fullName = "${@firstName} ${@lastName}"
+
+    present() console.log "Hi, I’m ${@fullName}!" // Invalid. Newline required.
+
+    present()
+      console.log "Hi, I’m ${@fullName}!" // Valid.
+  ```
+
+  The undecided part is how to pass multiple function literals as arguments to a
+  function, or as items of an array. Here’s an idea:
+
+  ```
+  foo arg1, arg2, |>
+    bar // Passing more arguments after this function literal is not possible.
+
+  foo arg1, arg2, (|>
+    bar
+  ), arg4 // You need to wrap in parentheses.
+
+  foo
+    arg1, arg2
+    |>
+      bar
+    arg4 // Another way is to allow this indented style with dropped commas at EOL.
+  ```
+
 - “Automatic comma insertions” in arrays and objects (and possibly parameter
   lists?).
 
