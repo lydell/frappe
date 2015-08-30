@@ -44,13 +44,38 @@ Aliases
 - `or` -> `||`
 - `not` -> `!`
 - `is` -> `===`
-- (`isnt` is intentionally left out here; you may read about it in the
-  [Undecided features] section.
+- `isnt` -> `!==`
+
+  In English, “isn’t” is an abbreviation for “is not”. Should `is not` → `!==`,
+  too?
+
+  There are two ways to go here. One is to allow `is not` → `!==`. The other is
+  to add a separate operator, like `isnt`. If we _don’t_ allow `is not` → `!==`,
+  it doesn’t matter what the separate operator is—we will _always_ have the
+  possible `is not` → `!==` vs. `is not` → `=== !` confusion.
+
+  If we _do_ allow `is not` → `!==` we trade one confusion for two others. `not
+  expression` would no longer always compile to `!expression`—it’d be dependent
+  on if the previous token is `is`—and `is` would no longer always compile to
+  `===`—it’d be dependent on if the next token is `not`. This has been [debated
+  in CoffeeScript] before.
+
+  Note that Python has all three of `is`, `not` and `is not`, but in Python `==`
+  and `is` mean different things and `a is (not b)` is pointless, so looking at
+  Python is no help.
+
+  In the end, the easiest way to go is to just do it like CoffeeScript. After
+  all, lots of people are used to it. I also find `expression1 isnt expression2`
+  a more obvious negated comparison than `expression1 is not expression2`,
+  because of the extra space.
+
 - `@` → `this.`. Unlike CoffeeScript, `@` strictly means `this.`, so `@` by
   itself is invalid (use `this` instead), as is `@[foo]` and `@()` (use
   `this[foo]` and `this()` instead). This (no pun intended) should not
   interfere with JavaScript’s proposed decorators, since they can only be used
   before class method definitions.
+
+[debated in CoffeeScript]: https://github.com/jashkenas/coffeescript/issues/3201
 
 Operators
 ---------
@@ -306,20 +331,6 @@ Number and string member access
 Undecided features
 ------------------
 
-- CoffeeScript  has `isnt` -> `!==`. In English, “isn’t” is an abbreviation for
-  “is not”. Should `is not` → `!==` too? That’s a difficult question. It might
-  be confusing otherwise, but it would create an exception for the `not`
-  operator. `not a` would mean `!a` except when preceded by `is`. This can
-  probably be [debated to death].
-
-  Note that Python has an `is not` operator, but in Python `==` and `is` mean
-  different things and `a is (not b)` is pointless, so looking at Python is no
-  help.
-
-  It might be the easiest to just do it like CoffeeScript. After all, lots of
-  people are used to it. On the other hand, it is very uncommon to do `a ===
-  !b`.
-
 - CoffeeScript has `loop` → `while true`. Is it worth it? Could there be `while
   { block }` → `while (true) { block }`?
 
@@ -380,8 +391,6 @@ Undecided features
 
 - `a %% b` “useful” modulo. Used it a few times. `(a % b + b) % b` is difficult
   to remember.
-
-[debated to death]: https://github.com/jashkenas/coffeescript/issues/3201
 
 Considered features intentionally left out
 ------------------------------------------
