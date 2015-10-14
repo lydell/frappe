@@ -501,7 +501,8 @@ Intentionally left out CoffeeScript features
   inheritance instead.
 
 - The `::` → `.prototype.` operator. Not used enough to warrant that shortcut.
-  Will be used even less not that JavaScript has `class` syntax.
+  Will be used even less not that JavaScript has `class` syntax. There is also
+  a proposal to use `::` [as a bind operator, which has already been implemented in Babel][bind-operator].
 
 - `a in b` → `b.indexOf(a)`. Too confusing for Frappe to change one of
   JavaScript’s operators. Use `b.includes(a)` instead.
@@ -552,3 +553,6 @@ Other
 - Provide everything needed to create a good linter. A Frappe linter should
   ideally only have to deal with Frappe-related things, while one of the
   established JavaScript linters could be used after it.
+
+
+  bind-operator: https://github.com/babel/babel/issues/1287
