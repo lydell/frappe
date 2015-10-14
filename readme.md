@@ -501,7 +501,9 @@ Intentionally left out CoffeeScript features
   inheritance instead.
 
 - The `::` → `.prototype.` operator. Not used enough to warrant that shortcut.
-  Will be used even less not that JavaScript has `class` syntax.
+  Will be used even less now that JavaScript has `class` syntax. There is also a
+  proposal to use [`::` as a bind operator, which has already been implemented
+  in Babel][bind-operator].
 
 - `a in b` → `b.indexOf(a)`. Too confusing for Frappe to change one of
   JavaScript’s operators. Use `b.includes(a)` instead.
@@ -545,6 +547,7 @@ Intentionally left out CoffeeScript features
 
 [Undecided features]: #undecided-features
 [Intentionally left out CoffeeScript features]: #intentionally-left-out-coffeescript-features
+[bind-operator]: https://github.com/babel/babel/issues/1287
 
 Other
 =====
