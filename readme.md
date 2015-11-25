@@ -84,6 +84,8 @@ Operators
 - `a not instanceof b` → `!(a instanceof b)`
 - `a not in b` → `!(a in b)`
 - `a < b < c` → `a < b && b < c` (also applies to `>`, `<=` and `>=`)
+- `a %% b` → `(a % b + b) % b`. “Useful” modulo.
+
 
 Conditionals and loops
 ----------------------
@@ -404,15 +406,11 @@ foo
   arg4 // Use the indented style with “automatic comma insertions”.
 ```
 
-
 Undecided features
 ------------------
 
 - `a?.b?()` etc. Let’s see what the JavaScript proposals here come up with.
   Related: `a ?= b`, `a ? b` (the last one conflicts with `a ? b : c`).
-
-- `a %% b` “useful” modulo. Used it a few times. `(a % b + b) % b` is difficult
-  to remember.
 
 Considered features intentionally left out
 ------------------------------------------
