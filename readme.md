@@ -406,6 +406,24 @@ foo
   arg4 // Use the indented style with “automatic comma insertions”.
 ```
 
+Regarding tabs vs. spaces and the amount of spaces used (`t` means a tab
+character and `s` means a space character):
+
+```
+if a
+ssif b
+ssssssf // Every level does not need to be indented the same amount.
+t   ssf // While the tab character happens to align here, it is disallowed.
+sssssf // Invalid. When dedenting one of the earlier levels must be used.
+if a
+t    ssf // Mixin tabs and spaces is ok.
+```
+
+Good error messages about bad indentation or using for example non-breaking
+spaces should be used.
+
+It is up to a linter to enforce a nice and consistent indent style.
+
 Undecided features
 ------------------
 
