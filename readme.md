@@ -88,10 +88,12 @@ Operators
 Conditionals and loops
 ----------------------
 
-- Parentheses can be dropped if followed by a block:
+- Parentheses are not required around the condition (see also [Significant
+  indentation]):
 
   ```
-  if condition { block } // valid
+  if condition // valid
+     block
   if condition statement // invalid
   ```
 
@@ -104,6 +106,8 @@ Conditionals and loops
   `unless`)
 - `statement while expression` → `while (expression) statement` (also applies to
   `until` and `for`)
+
+[Significant indentation]: #significant-indentation
 
 Parentheses-less function calls when used as statements
 -------------------------------------------------------
@@ -328,6 +332,79 @@ Number and string member access
 - `a.'prop-name'` → `a['prop-name']`
 - `a.'prop-${b}'` → ``a[`prop-${b}`]``
 
+“Automatic comma insertions”
+----------------------------
+
+In arrays, objects and parameter lists:
+
+    let array = [
+      'one'
+      2
+      three
+    ]
+    let object = {
+      a: 1
+      b: 2
+    }
+    foo
+      arg1
+      arg2
+      arg3
+
+
+Significant indentation
+-----------------------
+
+Frappe does not use braces for blocks (but still require them for object
+literals), and requires a newline to start blocks.
+
+```
+if condition
+  foo = bar
+
+if (condition) // You can of course wrap any expression in parentheses if you want to.
+  foo = bar
+
+if (condition) foo = bar // Invalid. Newline required.
+foo = bar if condition // Valid.
+
+function add(a, b)
+  return a + b
+
+function add(a, b) return a + b // Invalid. Newline required.
+
+add = (a, b) => a + b // Valid.
+add = |a, b> a + b // Valid.
+
+class Person
+  constructor(@firstName, @lastName)
+    @fullName = "${@firstName} ${@lastName}"
+
+  present() console.log "Hi, I’m ${@fullName}!" // Invalid. Newline required.
+
+  present()
+    console.log "Hi, I’m ${@fullName}!" // Valid.
+```
+
+Passing multiple function literals as arguments to a function, or as items of an
+array:
+
+```
+foo arg1, arg2, |>
+  bar // Passing more arguments after this function literal is not possible.
+
+foo arg1, arg2, (|>
+  bar
+), arg4 // You need to wrap in parentheses.
+
+foo
+  arg1, arg2
+  |>
+    bar
+  arg4 // Use the indented style with “automatic comma insertions”.
+```
+
+
 Undecided features
 ------------------
 
@@ -339,74 +416,6 @@ Undecided features
 
 - `a %% b` “useful” modulo. Used it a few times. `(a % b + b) % b` is difficult
   to remember.
-
-- Significant indentation. I _love_ significant indentation, so it hurt a bit
-  making this decision. It takes Frappe further away from JavaScript, and
-  requires to make lots of difficult decisions, but it _might_ be worth it.
-
-  The current idea is to drop all braces for blocks (but still require them for
-  object literals), and require a newline to start blocks.
-
-  ```
-  if condition
-    foo = bar
-
-  if (condition) // You can of course wrap any expression in parentheses if you want to.
-    foo = bar
-
-  if (condition) foo = bar // Invalid. Newline required.
-  foo = bar if condition // Valid.
-
-  function add(a, b)
-    return a + b
-
-  function add(a, b) return a + b // Invalid. Newline required.
-
-  add = (a, b) => a + b // Valid.
-  add = |a, b> a + b // Valid.
-
-  class Person
-    constructor(@firstName, @lastName)
-      @fullName = "${@firstName} ${@lastName}"
-
-    present() console.log "Hi, I’m ${@fullName}!" // Invalid. Newline required.
-
-    present()
-      console.log "Hi, I’m ${@fullName}!" // Valid.
-  ```
-
-  The undecided part is how to pass multiple function literals as arguments to a
-  function, or as items of an array. Here’s an idea:
-
-  ```
-  foo arg1, arg2, |>
-    bar // Passing more arguments after this function literal is not possible.
-
-  foo arg1, arg2, (|>
-    bar
-  ), arg4 // You need to wrap in parentheses.
-
-  foo
-    arg1, arg2
-    |>
-      bar
-    arg4 // Another way is to allow this indented style with dropped commas at EOL.
-  ```
-
-- “Automatic comma insertions” in arrays and objects (and possibly parameter
-  lists?).
-
-      let array = [
-        'one'
-        2
-        three
-      ]
-      let object = {
-        a: 1
-        b: 2
-      }
-
-  If significant indentation makes it, then this one definitely does as well.
 
 Considered features intentionally left out
 ------------------------------------------
