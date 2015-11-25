@@ -408,9 +408,6 @@ foo
 Undecided features
 ------------------
 
-- CoffeeScript has `loop` → `while true`. Is it worth it? Could there be `while
-  { block }` → `while (true) { block }`?
-
 - `a?.b?()` etc. Let’s see what the JavaScript proposals here come up with.
   Related: `a ?= b`, `a ? b` (the last one conflicts with `a ? b : c`).
 
@@ -553,6 +550,8 @@ Intentionally left out CoffeeScript features
   should rapidly adopt new things, which should be significantly easier for
   Frappe than for CoffeeScript, since Frappe departs less from JavaScript and is
   less opinionated.
+
+- `loop` → `while true`. Not worth it.
 
 [Undecided features]: #undecided-features
 [Intentionally left out CoffeeScript features]: #intentionally-left-out-coffeescript-features
