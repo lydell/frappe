@@ -303,24 +303,37 @@ syntax for arrow functions in addition to the standard one.
 
     array.map(x => x * 2)
     // Equivalent to:
-    array.map(|x> x * 2)
+    array.map(#x> x * 2)
 
     array.map((x, index) => x * index)
     // Equivalent to:
-    array.map(|x, index> x * index)
+    array.map(#x, index> x * index)
 
     array.map(({value}) => value * 2)
     // Equivalent to:
-    array.map(|{value}> value * 2)
+    array.map(#{value}> value * 2)
 
     window.setTimeout(() => alert 'Hello, world!', 1000)
     // Equivalent to:
-    window.setTimeout(|> alert 'Hello, world!', 1000)
+    window.setTimeout(#> alert 'Hello, world!', 1000)
 
 This way you don’t need to constantly remove and re-add those parentheses when
 your function changes.
 
-Frappe also has arrow generators: `*|>` → `function*(){}.bind(this)`.
+Frappe also has arrow generators: `*#>` → `function*(){}.bind(this)`.
+
+Random notes:
+
+- I like the look of `=>`, being an arrow.
+- I don’t like multiple parentheses in a row (`((`): `a.map((x, i) => x * i)`.
+- `#>` looks like `=>` but with `//` crossed over the `=`. The similarity is
+  nice.
+- `#` is large and delimiter-y, so it works to put the parameters between `#`
+  and `>`.
+- `#>` looks nice without parameters, too.
+- From the beginning, `|>` or `|a, b>` was considered. However, this makes
+  parsing more difficult when it comes to distinguishing it from the binary
+  operator `|`, something I’d like to avoid.
 
 Sane member access on number literals
 -------------------------------------
@@ -376,7 +389,7 @@ function add(a, b)
 function add(a, b) return a + b // Invalid. Newline required.
 
 add = (a, b) => a + b // Valid.
-add = |a, b> a + b // Valid.
+add = #a, b> a + b // Valid.
 
 class Person
   constructor(@firstName, @lastName)
@@ -392,16 +405,16 @@ Passing multiple function literals as arguments to a function, or as items of an
 array:
 
 ```
-foo arg1, arg2, |>
+foo arg1, arg2, #>
   bar // Passing more arguments after this function literal is not possible.
 
-foo arg1, arg2, (|>
+foo arg1, arg2, (#>
   bar
 ), arg4 // You need to wrap in parentheses.
 
 foo
   arg1, arg2
-  |>
+  #>
     bar
   arg4 // Use the indented style with “automatic comma insertions”.
 ```
