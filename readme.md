@@ -334,6 +334,7 @@ Random notes:
 - From the beginning, `|>` or `|a, b>` was considered. However, this makes
   parsing more difficult when it comes to distinguishing it from the binary
   operator `|`, something I’d like to avoid.
+- Finally, some languages use `|>` as a pipe operator, which might be confusing.
 
 Sane member access on number literals
 -------------------------------------
