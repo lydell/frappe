@@ -268,18 +268,18 @@ Regex literals quickly become difficult to read in JavaScript. CoffeeScript
 provides `///`-delimited regexes (similar to `"""`-delimited strings), which a
 step forward, but the triple-slash delimiter is clunky.
 
-In addition to JavaScript’s `/regex/g` syntax, Frappe allows putting a `#` in
+In addition to JavaScript’s `/regex/g` syntax, Frappe allows putting a `\` in
 front of any (un-tagged) string literal, making it a regex. The string literal
 works exactly like they do otherwise, with one exception: unescaped whitespace
 is removed.
 
-Regex flags are put between the `#` and the string literal. Having them before
+Regex flags are put between the `\` and the string literal. Having them before
 the regex itself lets you know if it is for example case sensitive before trying
 to understand what the regex does.
 
-    integer = #'\d+'
-    protocol = #i"^ [a-z]+ ://"
-    string = #g`
+    integer = \'\d+'
+    protocol = \i"^ [a-z]+ ://"
+    string = \g`
       (["'])         // start delimiter
       (?:
         (?!\1) [^\\] // any character except the delimiter and backslashes
@@ -288,8 +288,16 @@ to understand what the regex does.
       )*
       \1             // end delimiter
     `
-    mention = #'\b@${regexEscape(username)}\b'
-    assert #`\ `.test(' ')
+    mention = \'\b@${regexEscape(username)}\b'
+    assert \`\ `.test(' ')
+
+In JavaScript, backslashes are used for escapes in variable names. That is never
+useful, so Frappe does not support it. That frees up a character for Frappe to
+use in some other way, without the risk of JavaScript deciding to use that
+character some other way in the future. (Originally, `#` was used instead of `\`
+for regexes, but then we might run into said issue. Also, I like the backslash
+better since it reminds that backslashes in the following “string” are treated
+differently.)
 
 [CoffeeLint]: http://coffeelint.org/
 
@@ -299,42 +307,46 @@ Consistently short arrow function syntax
 JavaScript’s `x => x * 2` is great because it is such a short syntax for lambda
 functions. Unfortunately, it often gets longer because of multiple arguments or
 destructuring, which requires parentheses. Therefore Frappe has an alternate
-syntax for arrow functions in addition to the standard one.
+syntax for arrow functions in addition to the standard one. The syntax is
+inspired by [Elm]’s anonymous functions.
 
     array.map(x => x * 2)
     // Equivalent to:
-    array.map(#x> x * 2)
+    array.map(\x => x * 2)
 
     array.map((x, index) => x * index)
     // Equivalent to:
-    array.map(#x, index> x * index)
+    array.map(\x, index => x * index)
 
     array.map(({value}) => value * 2)
     // Equivalent to:
-    array.map(#{value}> value * 2)
+    array.map(\{value} => value * 2)
 
     window.setTimeout(() => alert 'Hello, world!', 1000)
     // Equivalent to:
-    window.setTimeout(#> alert 'Hello, world!', 1000)
+    window.setTimeout(\=> alert 'Hello, world!', 1000)
 
 This way you don’t need to constantly remove and re-add those parentheses when
 your function changes.
 
-Frappe also has arrow generators: `*#>` → `function*(){}.bind(this)`.
+Frappe also has arrow generators: `\*=>` → `function*(){}.bind(this)`.
 
 Random notes:
 
 - I like the look of `=>`, being an arrow.
 - I don’t like multiple parentheses in a row (`((`): `a.map((x, i) => x * i)`.
-- `#>` looks like `=>` but with `//` crossed over the `=`. The similarity is
-  nice.
-- `#` is large and delimiter-y, so it works to put the parameters between `#`
-  and `>`.
-- `#>` looks nice without parameters, too.
+- `\` is large and delimiter-y, so it works to put the parameters between `\`
+  and `=>`.
+- `\=>` looks nice without parameters, too.
 - From the beginning, `|>` or `|a, b>` was considered. However, this makes
   parsing more difficult when it comes to distinguishing it from the binary
   operator `|`, something I’d like to avoid.
 - Finally, some languages use `|>` as a pipe operator, which might be confusing.
+- At one point, `#>` was used. `#>` looks like `=>` but with `//` crossed over
+  the `=`. The similarity is nice. But `\=>` looks even better. Also, not using
+  `#` is a plus, as mentioned in the regex section above.
+
+[Elm]: http://elm-lang.org/
 
 Sane member access on number literals
 -------------------------------------
@@ -390,7 +402,7 @@ function add(a, b)
 function add(a, b) return a + b // Invalid. Newline required.
 
 add = (a, b) => a + b // Valid.
-add = #a, b> a + b // Valid.
+add = \a, b => a + b // Valid.
 
 class Person
   constructor(@firstName, @lastName)
@@ -406,16 +418,16 @@ Passing multiple function literals as arguments to a function, or as items of an
 array:
 
 ```
-foo arg1, arg2, #>
+foo arg1, arg2, \=>
   bar // Passing more arguments after this function literal is not possible.
 
-foo arg1, arg2, (#>
+foo arg1, arg2, (\=>
   bar
 ), arg4 // You need to wrap in parentheses.
 
 foo
   arg1, arg2
-  #>
+  \=>
     bar
   arg4 // Use the indented style with “automatic comma insertions”.
 ```
@@ -449,8 +461,8 @@ Considered features intentionally left out
 
 - `#` for single line comments. `#` is beautiful and short and used in many
   languages, but it deviates from JavaScript for little reason. Better to keep
-  `//` doing what it does in JavaScript, and use `#` (one of the few unused
-  ASCII characters) for something more useful.
+  `//` doing what it does in JavaScript, and leave `#` alone, waiting for
+  JavaScript to make use of it in the future.
 
 - “Automatic comma inseriton” between operator-less expressions in arrays and
   objects (and possibly parameter lists).
