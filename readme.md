@@ -12,10 +12,11 @@ Internet (unfortunately I couldn’t find where when writing this):
 > Whenever you feel like creating your own programming language, lay down and
 > try to resist the urge.
 
-Perhaps it’d be lots of fun. Perhaps it’d be a huge waste of time. Perhaps it’d
-be useful. Will it happen? I have no idea.
+It’d be lots of fun. It’d also be a huge waste of time. Will it happen? No.
+You might be interested in [LightScript], though.
 
 [CoffeeScript]: http://coffeescript.org/
+[LightScript]: http://www.lightscript.org/
 
 Golden rules
 ============
